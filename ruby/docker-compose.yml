@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  app:
+    build:  
+      context: ~/repos/personal/docker-dev/ruby
+      args:
+        - ruby_version=${RUBY_VERSION-2.6}
+        - rails_version=${RAILS_VERSION-6.0}
+    volumes:
+      - .:/app
+      - gems:/gems
+      - ~/.dotfiles:/home/ruby/.dotfiles:ro
+      - ~/repos/personal/docker-dev/ruby/entrypoint:/entrypoint
+    tty: true
+    stdin_open: true
+    entrypoint: /entrypoint
+    user: ruby
+
+volumes:
+  gems:

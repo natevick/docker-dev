@@ -1,0 +1,15 @@
+#! /bin/bash
+set -e
+
+HOST_DOMAIN=host.docker.internal
+HOST_IP=$(ip route | awk 'NR==1 {print $3}')
+echo "$HOST_IP $HOST_DOMAIN" | sudo tee -a /etc/hosts > /dev/null
+
+# mkdir -p ~/.local/share/pry
+# ln -sfn /history/.pry_history ~/.local/share/pry/pry_history
+rm -rf ~/.zshrc
+rcup -f -t docker
+
+# tmux new-session -d
+
+exec "$@"
